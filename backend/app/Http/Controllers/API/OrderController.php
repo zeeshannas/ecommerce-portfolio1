@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderItem;
+
+class OrderController extends Controller
+{
+    public function confirmPayment(Request $request)
+    {
+        $user = $request->user();
+
+        $cart = Cart::with('items.product')
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$cart || $cart->items->isEmpty()) {
+            return response()->json(['message' => 'Cart empty'], 400);
+        }
+
+        $total = 0;
+
+        foreach ($cart->items as $item) {
+            $total += $item->product->price * $item->quantity;
+        }
+
+        $order = Order::create([
+            'user_id' => $user->id,
+            'total_amount' => $total,
+            'payment_status' => 'paid',
+            'stripe_payment_id' => $request->payment_id
+        ]);
+
+        foreach ($cart->items as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->product->price,
+            ]);
+        }
+
+        $cart->items()->delete();
+
+        return response()->json(['message' => 'Order created successfully']);
+    }
+}
