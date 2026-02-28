@@ -15,14 +15,14 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'nullable|image'
+            'image' => 'nullable|string'
         ]);
 
-        $imagePath = null;
+        // $imagePath = null;
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
-        }
+        // if ($request->hasFile('image')) {
+        //     $imagePath = $request->file('image')->store('products', 'public');
+        // }
 
         $product = Product::create([
             'user_id' => $request->user()->id,
@@ -30,7 +30,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
-            'image' => $imagePath
+            'image' => $request->image
         ]);
 
         return response()->json($product);
@@ -82,6 +82,19 @@ class ProductController extends Controller
         $products = $query->paginate(10);
 
         return response()->json($products);
+    }
+
+    public function updateProduct(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
+        return response()->json($product);
+    }
+
+    public function destroy($id){
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return response()->json(['message' => 'Product deleted']);
     }
 
     public function myProducts(Request $request)

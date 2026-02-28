@@ -15,12 +15,20 @@ export default function OrderSuccess() {
         <p className="mt-2 text-slate-600">
           Thank you for shopping with us. We'll get your order to you soon.
         </p>
-        <Link
-          to="/products"
-          className="inline-block mt-6 px-6 py-3 bg-slate-900 text-white font-medium rounded-lg hover:bg-slate-800 transition"
-        >
-          Continue shopping
-        </Link>
+        <div className="flex flex-wrap justify-center gap-3 mt-6">
+          <Link
+            to="/orders"
+            className="inline-block px-6 py-3 bg-slate-900 text-white font-medium rounded-lg hover:bg-slate-800 transition"
+          >
+            View orders
+          </Link>
+          <Link
+            to="/products"
+            className="inline-block px-6 py-3 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition"
+          >
+            Continue shopping
+          </Link>
+        </div>
       </div>
     </div>
   );

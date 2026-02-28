@@ -52,7 +52,7 @@ class PaymentController extends Controller
             return response()->json(['message' => 'Unable to retrieve PaymentIntent', 'error' => $e->getMessage()], 400);
         }
 
-        $status = data_get($pi, 'payment_status');
+        $status = data_get($pi, 'status');
 
         if ($status === 'succeeded') {
             $order->update([

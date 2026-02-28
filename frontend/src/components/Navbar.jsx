@@ -60,6 +60,12 @@ export default function Navbar() {
                   </svg>
                   Cart
                 </Link>
+                <Link
+                  to="/orders"
+                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition"
+                >
+                  Orders
+                </Link>
                 <button
                   onClick={() => {
                     logout();

@@ -8,6 +8,7 @@ import VendorDashboard from "./pages/VendorDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
 import OrderSuccess from "./pages/OrderSuccess";
+import OrderHistory from "./pages/OrderHistory";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./context/AuthContext";
 import AdminSidebar from "./components/AdminSidebar";
@@ -41,6 +42,7 @@ function App() {
           />
 
           <Route path="/cart" element={<Layout><Cart /> </Layout>} />
+          <Route path="/orders" element={<Layout><OrderHistory /></Layout>} />
           <Route path="/order-success" element={<Layout><OrderSuccess /></Layout>} />
           <Route
             path="/admin/*"

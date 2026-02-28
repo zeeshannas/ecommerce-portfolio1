@@ -12,4 +12,9 @@ class Order extends Model
         'payment_status',
         'stripe_payment_id'
     ];
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }
